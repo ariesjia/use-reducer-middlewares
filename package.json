@@ -1,6 +1,6 @@
 {
   "name": "use-reducer-middlewares",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -20,8 +20,7 @@
     "url": "https://github.com/ariesjia/use-reducer-middlewares/issues"
   },
   "homepage": "https://github.com/ariesjia/use-reducer-middlewares#readme",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.3.4",
     "@storybook/addon-actions": "^5.0.0",
@@ -46,7 +45,8 @@
     "ts-jest": "^24.0.0",
     "ts-loader": "5.3.3",
     "ts-node": "7.0.1",
-    "typescript": "^3.2.2"
+    "typescript": "^3.2.2",
+    "user-event": "^1.4.8"
   },
   "peerDependencies": {
     "react": "^16.8.0",

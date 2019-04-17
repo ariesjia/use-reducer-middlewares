@@ -25,9 +25,10 @@ function applyMiddleware(chain) {
 const useReducerMiddlewares = function<R extends Reducer<any, any>>(
   reducer: R,
   initialState: ReducerState<R>,
+  initializer?: undefined,
 ){
   return (chain: Middleware[] = []) => {
-    const [state, dispatch] = useReducer(reducer, initialState);
+    const [state, dispatch] = useReducer(reducer, initialState, initializer);
     const getState = useCallback(() => state, [state])
     const middleWareDispatch = useMemo(() => {
       const store = { dispatch, getState }

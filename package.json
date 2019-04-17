@@ -1,0 +1,55 @@
+{
+  "name": "use-reducer-middlewares",
+  "version": "0.0.1",
+  "description": "",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "test": "jest --config test/unit/jest.conf.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ariesjia/use-reducer-middlewares.git"
+  },
+  "author": "Jia Chen <ariesjia00@hotmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ariesjia/use-reducer-middlewares/issues"
+  },
+  "homepage": "https://github.com/ariesjia/use-reducer-middlewares#readme",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@storybook/addon-actions": "^5.0.0",
+    "@storybook/addon-links": "^5.0.0",
+    "@storybook/addon-storysource": "^5.0.0",
+    "@storybook/addons": "^5.0.0",
+    "@storybook/react": "^5.0.0",
+    "@types/jest": "^24.0.6",
+    "@types/react": "^16.8.0",
+    "@types/styled-jsx": "^2.2.8",
+    "babel-loader": "^8.0.5",
+    "css-loader": "^2.1.0",
+    "jest": "^24.1.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "react-testing-library": "^5.9.0",
+    "rimraf": "^2.6.2",
+    "scss-loader": "^0.0.1",
+    "storybook": "^1.0.0",
+    "style-loader": "^0.23.1",
+    "styled-jsx": "^3.2.1",
+    "ts-jest": "^24.0.0",
+    "ts-loader": "5.3.3",
+    "ts-node": "7.0.1",
+    "typescript": "^3.2.2"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  }
+}

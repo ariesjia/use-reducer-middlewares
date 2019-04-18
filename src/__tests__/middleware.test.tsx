@@ -9,7 +9,7 @@ describe("use-form test", () => {
     jest.resetModules()
   })
 
-  it('should get initial form value', () => {
+  it('should excute middleware', () => {
 
     const mockFunc = jest.fn()
 
@@ -36,5 +36,67 @@ describe("use-form test", () => {
     const button = getByTestId(container, 'button')
     userEvent.click(button)
     expect(mockFunc).toHaveBeenCalled()
+  })
+
+  it('should excute middleware as chain', () => {
+
+    const amockFunc = jest.fn()
+    const bmockFunc = jest.fn()
+
+    const AMiddleware = ({ dispatch, getState }) => next => action => {
+      amockFunc(action)
+      return next({
+        ...action,
+        meta: 'fromA'
+      });
+    }
+
+    const BMiddleware = ({ dispatch, getState }) => next => action => {
+      bmockFunc(action)
+      return next({
+        ...action,
+        meta: 'fromB'
+      });
+    }
+
+
+    const initialState = {};
+    function reducer(state, action) {
+      return {
+        ...state,
+        ...action
+      }
+    }
+
+    let currentState
+
+    function Component() {
+      const [state, dispatch] = useMiddleWares(reducer, initialState)([
+        AMiddleware,
+        BMiddleware
+      ]);
+      currentState = state
+      return (
+        <>
+          <button data-testid="button" onClick={() => dispatch({type: 'test'})}>+</button>
+        </>
+      );
+    }
+    const { container } = render(<Component />)
+    const button = getByTestId(container, 'button')
+    userEvent.click(button)
+    expect(amockFunc).toHaveBeenCalled()
+    expect(bmockFunc).toHaveBeenCalled()
+    expect(amockFunc).toHaveBeenCalledWith({
+      type: 'test'
+    })
+    expect(bmockFunc).toHaveBeenCalledWith({
+      type: 'test',
+      meta: "fromA",
+    })
+    expect(currentState).toEqual({
+      type: 'test',
+      meta: "fromB",
+    })
   })
 })

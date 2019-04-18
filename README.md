@@ -15,7 +15,7 @@ npm install use-reducer-middlewares
 ## Demo
 
 ```javascript
-import useForm from 'use-reducer-middlewares'
+import useMiddleWares from 'use-reducer-middlewares'
 
 const [state, dispatch] = useMiddleWares(reducer, initialState)([
   xxxMiddleware

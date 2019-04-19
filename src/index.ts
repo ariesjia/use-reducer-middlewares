@@ -14,12 +14,12 @@ export interface Middleware<
   ) => (action: any) => any
 }
 
-function applyMiddleware(chain) {
-  return (store) => {
+function compose(chain, dispatch) {
+  return store => {
     return chain.reduceRight((res, middleware) => {
-      return middleware(store)(res)
-    }, store.dispatch);
-  }
+      return middleware(store)(res);
+    }, dispatch);
+  };
 }
 
 const useReducerMiddlewares = function<R extends Reducer<any, any>>(
@@ -27,16 +27,22 @@ const useReducerMiddlewares = function<R extends Reducer<any, any>>(
   initialState: ReducerState<R>,
   initializer?: undefined,
 ){
-  return (chain: Middleware[] = []) => {
-    const [state, dispatch] = useReducer(reducer, initialState, initializer);
-    const getState = useCallback(() => state, [state])
-    const middleWareDispatch = useMemo(() => {
-      const store = { dispatch, getState }
-      return applyMiddleware(chain)(store)
-    }, chain)
+  return (middlewares: Middleware[] = []) => {
+    const [state, dispatch] = useReducer(reducer, initialState, initializer)
+    let middlewareDispatch;
+    const composedMiddleware = useMemo(() => {
+      return compose(middlewares, dispatch);
+    }, middlewares);
+    const middlewareAPI = useMemo(() => {
+      return {
+        getState: () => state,
+        dispatch: (...args) => middlewareDispatch(...args),
+      };
+    }, [state]);
+    middlewareDispatch = composedMiddleware(middlewareAPI);
     return [
       state,
-      middleWareDispatch,
+      middlewareDispatch,
     ]
   }
 }

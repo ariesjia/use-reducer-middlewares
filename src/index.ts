@@ -1,4 +1,4 @@
-import {useReducer, useMemo, useCallback, Reducer, ReducerState, SetStateAction, Dispatch} from 'react'
+import {useState, useMemo, Reducer, ReducerState, SetStateAction, Dispatch} from 'react'
 
 export interface MiddlewareAPI<S = any> {
   dispatch: Dispatch<any>
@@ -14,24 +14,30 @@ export interface Middleware<
   ) => (action: any) => any
 }
 
-function compose(chain, dispatch) {
-  return store => {
+function compose(chain) {
+  return (store, dispatch) => {
     return chain.reduceRight((res, middleware) => {
       return middleware(store)(res);
     }, dispatch);
   };
 }
 
-const useReducerMiddlewares = function<R extends Reducer<any, any>>(
+const useReducerMiddlewares = function<R extends Reducer<any, any>, I>(
   reducer: R,
-  initialState: ReducerState<R>,
-  initializer?: undefined,
+  initialState: I & ReducerState<R>,
+  initializer: (arg: I & ReducerState<R>) => ReducerState<R> = state => state,
 ){
   return (middlewares: Middleware[] = []) => {
-    const [state, dispatch] = useReducer(reducer, initialState, initializer)
+    const [hooksState, setState] = useState(initializer(initialState))
+    let state = hooksState
     let middlewareDispatch;
+    const dispatch = action => {
+      state = reducer(state, action)
+      setState(state)
+      return action;
+    }
     const composedMiddleware = useMemo(() => {
-      return compose(middlewares, dispatch);
+      return compose(middlewares);
     }, middlewares);
     const middlewareAPI = useMemo(() => {
       return {
@@ -39,7 +45,7 @@ const useReducerMiddlewares = function<R extends Reducer<any, any>>(
         dispatch: (...args) => middlewareDispatch(...args),
       };
     }, [state]);
-    middlewareDispatch = composedMiddleware(middlewareAPI);
+    middlewareDispatch = composedMiddleware(middlewareAPI, dispatch);
     return [
       state,
       middlewareDispatch,

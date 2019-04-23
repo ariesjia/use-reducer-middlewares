@@ -16,8 +16,18 @@ npm install use-reducer-middlewares
 
 ```javascript
 import useMiddleWares from 'use-reducer-middlewares'
+import logger from 'redux-logger'
 
-const [state, dispatch] = useMiddleWares(reducer, initialState)([
-  xxxMiddleware
+const reducer = function (state, action) {
+  // reducer
+  return state
+}
+
+const init = function(count) {
+  return {count}
+}
+
+const [state, dispatch] = useMiddleWares(reducer, 1, init)([
+  logger
 ]);
 ```

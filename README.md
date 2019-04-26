@@ -3,6 +3,8 @@
 
 [![NPM](https://img.shields.io/npm/v/use-reducer-middlewares.svg)](https://www.npmjs.com/package/use-reducer-middlewares)
 [![Build Status](https://travis-ci.org/ariesjia/use-reducer-middlewares.svg?branch=master)](https://travis-ci.org/ariesjia/use-reducer-middlewares)
+[![minified](https://badgen.net/bundlephobia/min/use-reducer-middlewares)](https://bundlephobia.com/result?p=use-reducer-middlewares)
+
 
 ## Install
 ```bash

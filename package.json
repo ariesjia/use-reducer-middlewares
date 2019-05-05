@@ -37,7 +37,6 @@
     "jest": "^24.1.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
-    "react-testing-library": "^5.9.0",
     "redux-logger": "^3.0.6",
     "rimraf": "^2.6.2",
     "scss-loader": "^0.0.1",
@@ -47,8 +46,7 @@
     "ts-jest": "^24.0.0",
     "ts-loader": "5.3.3",
     "ts-node": "7.0.1",
-    "typescript": "^3.2.2",
-    "user-event": "^1.4.8"
+    "typescript": "^3.2.2"
   },
   "peerDependencies": {
     "react": "^16.8.0",

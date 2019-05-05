@@ -33,6 +33,7 @@
     "@types/styled-jsx": "^2.2.8",
     "babel-loader": "^8.0.5",
     "css-loader": "^2.1.0",
+    "hooks-test-util": "^0.0.1",
     "jest": "^24.1.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",

@@ -1,6 +1,5 @@
 import * as React from "react";
-import { render, getByTestId } from 'react-testing-library'
-import userEvent from 'user-event'
+import render, { act } from 'hooks-test-util'
 import useMiddleWares from '../index'
 
 
@@ -9,33 +8,31 @@ describe("use-form test", () => {
     jest.resetModules()
   })
 
-  it('should excute middleware', () => {
+  it('should excute middleware when dispatch', () => {
 
     const mockFunc = jest.fn()
 
     const testMiddleware = ({ dispatch, getState }) => next => action => {
-      mockFunc(dispatch, getState)
+      mockFunc(action)
       return next(action);
     }
 
-    const initialState = {};
+    const initialState = {}
+
     function reducer() {
       return {}
     }
-    function Component() {
-      const [state, dispatch] = useMiddleWares(reducer, initialState)([
-        testMiddleware
-      ]);
-      return (
-        <>
-          <button data-testid="button" onClick={() => dispatch({type: 'increment'})}>+</button>
-        </>
-      );
-    }
-    const { container } = render(<Component />)
-    const button = getByTestId(container, 'button')
-    userEvent.click(button)
+
+    const { container } = render(() => useMiddleWares(reducer, initialState)([
+      testMiddleware
+    ]))
+
+    const action = {type: 'hello'};
+    act(() => {
+      container.hook[1](action)
+    })
     expect(mockFunc).toHaveBeenCalled()
+    expect(mockFunc).toHaveBeenCalledWith(action)
   })
 
   it('should excute middleware as chain', () => {
@@ -59,8 +56,8 @@ describe("use-form test", () => {
       });
     }
 
+    const initialState = {}
 
-    const initialState = {};
     function reducer(state, action) {
       return {
         ...state,
@@ -68,34 +65,25 @@ describe("use-form test", () => {
       }
     }
 
-    let currentState
+    const { container } = render(() => useMiddleWares(reducer, initialState)([
+      AMiddleware,
+      BMiddleware
+    ]))
 
-    function Component() {
-      const [state, dispatch] = useMiddleWares(reducer, initialState)([
-        AMiddleware,
-        BMiddleware
-      ]);
-      currentState = state
-      return (
-        <>
-          <button data-testid="button" onClick={() => dispatch({type: 'test'})}>+</button>
-        </>
-      );
-    }
-    const { container } = render(<Component />)
-    const button = getByTestId(container, 'button')
-    userEvent.click(button)
+    const action = {type: 'test'};
+    act(() => {
+      container.hook[1](action)
+    })
+
     expect(amockFunc).toHaveBeenCalled()
     expect(bmockFunc).toHaveBeenCalled()
-    expect(amockFunc).toHaveBeenCalledWith({
-      type: 'test'
-    })
+    expect(amockFunc).toHaveBeenCalledWith(action)
     expect(bmockFunc).toHaveBeenCalledWith({
-      type: 'test',
+      ...action,
       meta: "fromA",
     })
-    expect(currentState).toEqual({
-      type: 'test',
+    expect(container.hook[0]).toEqual({
+      ...action,
       meta: "fromB",
     })
   })

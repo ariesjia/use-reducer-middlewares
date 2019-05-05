@@ -34,3 +34,6 @@ const [state, dispatch] = useMiddleWares(reducer, 1, init)([
   logger
 ]);
 ```
+
+## Sandbox Demo
+(Code Sandbox Demo)[https://codesandbox.io/s/wk3o2jp1ll]

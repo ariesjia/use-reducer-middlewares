@@ -6,11 +6,8 @@ before_script:
   - 'yarn build'
   - 'yarn build-storybook'
 
-scripts:
-  - 'npm install codecov -g'
-
 after_success:
-  - 'codecov'
+  - 'npx codecov'
 
 deploy:
   - provider: pages

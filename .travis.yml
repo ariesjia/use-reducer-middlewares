@@ -4,3 +4,25 @@ node_js:
 
 before_script:
   - 'yarn build'
+  - 'yarn build-storybook'
+
+scripts:
+  - 'npm install codecov -g'
+
+after_success:
+  - 'codecov'
+
+deploy:
+  - provider: pages
+    local_dir: './storybook-static'
+    skip_cleanup: true
+    github_token: $GITHUB_TOKEN
+    keep_history: false
+    on:
+      branch: master
+  - provider: script
+    skip_cleanup: false
+    script:
+      - npx semantic-release
+    on:
+      branch: master

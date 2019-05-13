@@ -5,7 +5,9 @@ TODO.md
 .idea
 src
 .babelrc
+.huskyrc
 .travis.yml
+commitlint.config.js
 .storybook
 test/unit/coverage/
 test-report.xml

@@ -2,14 +2,8 @@ import * as React from "react";
 import render, { act } from 'hooks-test-util'
 import useMiddleWares from '../index'
 
-
-describe("use-form test", () => {
-  beforeEach(() => {
-    jest.resetModules()
-  })
-
+describe("middleware test", () => {
   it('should excute middleware when dispatch', () => {
-
     const mockFunc = jest.fn()
 
     const testMiddleware = ({ dispatch, getState }) => next => action => {
@@ -27,7 +21,7 @@ describe("use-form test", () => {
       testMiddleware
     ]))
 
-    const action = {type: 'hello'};
+    const action = {type: 'test'};
     act(() => {
       container.hook[1](action)
     })
@@ -86,5 +80,93 @@ describe("use-form test", () => {
       ...action,
       meta: "fromB",
     })
+  })
+
+  it('should get current state when excute getState method in middleware', function () {
+
+    const initialState = {
+      status: 'status'
+    }
+
+    const testMiddleware = ({ getState }) => next => action => {
+      expect(getState()).toEqual(initialState)
+      return next(action)
+    }
+
+    function reducer() {
+      return {}
+    }
+
+    const { container } = render(() => useMiddleWares(reducer, initialState)([
+      testMiddleware
+    ]))
+
+    const action = {type: 'test'};
+
+    act(() => {
+      container.hook[1](action)
+    })
+  })
+
+  it('should dispatch new action when excute dispatch method in middleware', function () {
+    const initialState = {}
+
+    const testMiddleware = ({ dispatch }) => next => action => {
+      if(action.type === 'test') {
+        dispatch({
+          type: 'test_middleware'
+        })
+      }
+      return next(action)
+    }
+
+    const reducer = jest.fn().mockImplementation(() => ({}))
+
+    const { container } = render(() => useMiddleWares(reducer, initialState)([
+      testMiddleware
+    ]))
+
+    const action = {type: 'test'}
+
+    act(() => {
+      container.hook[1](action)
+    })
+
+    expect(reducer).toBeCalledTimes(2)
+    expect(reducer).toHaveBeenNthCalledWith(1, {}, {type: 'test_middleware'})
+    expect(reducer).toHaveBeenNthCalledWith(2, {}, {type: 'test'})
+  })
+
+  it('should get current state after middleware dispatch changed state', function () {
+    const initialState = {}
+
+    const testMiddleware = ({ dispatch }) => next => action => {
+      if(action.type === 'test') {
+        dispatch({
+          type: 'test_middleware'
+        })
+      }
+      return next(action)
+    }
+
+    const reducer = jest.fn().mockImplementation((state, action) => ({
+      status: action.type
+    }))
+
+    const { container } = render(() => useMiddleWares(reducer, initialState)([
+      testMiddleware
+    ]))
+
+    const action = {type: 'test'}
+
+    act(() => {
+      container.hook[1](action)
+    })
+
+    expect(reducer).toBeCalledTimes(2)
+    expect(reducer).toHaveBeenNthCalledWith(1, {}, {type: 'test_middleware'})
+    expect(reducer).toHaveBeenNthCalledWith(2, {
+      status: 'test_middleware'
+    }, {type: 'test'})
   })
 })

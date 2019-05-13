@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {storiesOf} from '@storybook/react'
-import {action} from '@storybook/addon-actions'
 import { linkTo } from '@storybook/addon-links'
 
 storiesOf('home', module)
@@ -19,7 +18,7 @@ storiesOf('home', module)
           <div className="content">
             <h3 className="strong">Use</h3>
             <blockquote>
-              <p>import useForm from 'use-reducer-middlewares'</p>
+              <p>import useMiddleWares from 'use-reducer-middlewares'</p>
               <p>
                 const [state, dispatch] = useMiddleWares(reducer, initialState)([
                   thunkMiddleware

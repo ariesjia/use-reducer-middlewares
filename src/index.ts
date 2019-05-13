@@ -1,4 +1,4 @@
-import {useState, useMemo, Reducer, ReducerState, SetStateAction, Dispatch} from 'react'
+import {useState, useRef, useMemo, Reducer, ReducerState, SetStateAction, Dispatch} from 'react'
 
 export interface MiddlewareAPI<S = any> {
   dispatch: Dispatch<any>
@@ -8,7 +8,7 @@ export interface MiddlewareAPI<S = any> {
 export interface Middleware<
   DispatchExt = {},
   S = any,
-  > {
+> {
   (store: MiddlewareAPI<S>): (
     next: Dispatch<SetStateAction<any>>
   ) => (action: any) => any
@@ -17,9 +17,9 @@ export interface Middleware<
 function compose(chain) {
   return (store, dispatch) => {
     return chain.reduceRight((res, middleware) => {
-      return middleware(store)(res);
-    }, dispatch);
-  };
+      return middleware(store)(res)
+    }, dispatch)
+  }
 }
 
 const useReducerMiddlewares = function<R extends Reducer<any, any>, I>(
@@ -28,26 +28,24 @@ const useReducerMiddlewares = function<R extends Reducer<any, any>, I>(
   initializer: (arg: I & ReducerState<R>) => ReducerState<R> = state => state,
 ){
   return (middlewares: Middleware[] = []) => {
-    const [hooksState, setState] = useState(initializer(initialState))
-    let state = hooksState
-    let middlewareDispatch;
+    const ref = useRef(initializer(initialState))
+    const [, setState] = useState(ref.current)
+    let middlewareDispatch
     const dispatch = action => {
-      state = reducer(state, action)
-      setState(state)
-      return action;
+      ref.current = reducer(ref.current, action)
+      setState(ref.current)
+      return action
     }
     const composedMiddleware = useMemo(() => {
-      return compose(middlewares);
-    }, middlewares);
-    const middlewareAPI = useMemo(() => {
-      return {
-        getState: () => state,
-        dispatch: (...args) => middlewareDispatch(...args),
-      };
-    }, [state]);
-    middlewareDispatch = composedMiddleware(middlewareAPI, dispatch);
+      return compose(middlewares)
+    }, middlewares)
+    const middlewareAPI = {
+      getState: () => ref.current,
+      dispatch: (...args) => middlewareDispatch(...args),
+    }
+    middlewareDispatch = composedMiddleware(middlewareAPI, dispatch)
     return [
-      state,
+      ref.current,
       middlewareDispatch,
     ]
   }

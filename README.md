@@ -1,5 +1,5 @@
 # use-reducer-middlewares
-> enhance React Hooks API useReducer to apply middlewares.
+> enhance React Hooks API `useReducer` can use middleware.
 
 [![NPM](https://img.shields.io/npm/v/use-reducer-middlewares.svg)](https://www.npmjs.com/package/use-reducer-middlewares)
 [![Build Status](https://travis-ci.org/ariesjia/use-reducer-middlewares.svg?branch=master)](https://travis-ci.org/ariesjia/use-reducer-middlewares)

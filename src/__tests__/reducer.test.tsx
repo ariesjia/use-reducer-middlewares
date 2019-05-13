@@ -2,7 +2,12 @@ import * as React from "react";
 import render, { act } from 'hooks-test-util'
 import useMiddleWares from '../index'
 
+const testMiddleware = () => next => action => {
+  return next(action)
+}
+
 describe("reducer test", () => {
+
   it('should update state when reducer return new state', () => {
     const initialState = {}
 
@@ -16,7 +21,30 @@ describe("reducer test", () => {
 
     // @ts-ignore
     const { container } = render(() => useMiddleWares(reducer, initialState)([
+      testMiddleware
     ]))
+
+    const action = {type: 'test'}
+    act(() => {
+      container.hook[1](action)
+    })
+
+    expect(container.hook[0]).toEqual(newState)
+  })
+
+  it('should reducer works without middleware', () => {
+    const initialState = {}
+
+    const newState = {
+      state: 'test'
+    }
+
+    function reducer() {
+      return newState
+    }
+
+    // @ts-ignore
+    const { container } = render(() => useMiddleWares(reducer, initialState)())
 
     const action = {type: 'test'}
     act(() => {
@@ -68,7 +96,7 @@ describe("reducer test", () => {
     expect(container.hook[0]).toEqual(initialState)
   })
 
-  it('should use initializer to init state when initializer parameter', function () {
+  it('should use initializer to init state when initializer parameter exist', function () {
 
     function initializer(count) {
       return {count}

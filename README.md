@@ -5,6 +5,7 @@
 [![Build Status](https://travis-ci.org/ariesjia/use-reducer-middlewares.svg?branch=master)](https://travis-ci.org/ariesjia/use-reducer-middlewares)
 [![minified](https://badgen.net/bundlephobia/min/use-reducer-middlewares)](https://bundlephobia.com/result?p=use-reducer-middlewares)
 [![license](https://badgen.net/badge/license/MIT/blue)](https://github.com/ariesjia/use-reducer-middlewares/blob/master/LICENSE)
+[![coverage](https://badgen.net/codecov/c/github/ariesjia/use-reducer-middlewares)](https://codecov.io/gh/ariesjia/use-reducer-middlewares)
 
 
 ## Install

@@ -4845,6 +4845,15 @@ dom-testing-library@^3.13.1:
     pretty-format "^24.7.0"
     wait-for-expect "^1.1.1"
 
+dom-testing-library@^4.0.0:
+  version "4.1.0"
+  resolved "https://registry.npm.taobao.org/dom-testing-library/download/dom-testing-library-4.1.0.tgz#273264e62e9e63f4e404f7349ddd7b9356aacd23"
+  dependencies:
+    "@babel/runtime" "^7.4.3"
+    "@sheerun/mutationobserver-shim" "^0.3.2"
+    pretty-format "^24.7.0"
+    wait-for-expect "^1.1.1"
+
 dom-walk@^0.1.0:
   version "0.1.1"
   resolved "http://registry.npm.taobao.org/dom-walk/download/dom-walk-0.1.1.tgz#672226dc74c8f799ad35307df936aba11acd6018"
@@ -6083,9 +6092,11 @@ hook-std@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npm.taobao.org/hook-std/download/hook-std-2.0.0.tgz#ff9aafdebb6a989a354f729bb6445cf4a3a7077c"
 
-hooks-test-util@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.npm.taobao.org/hooks-test-util/download/hooks-test-util-0.0.1.tgz#ec4630bdd24de66d34fffbc07a6ba482cb702e1c"
+hooks-test-util@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.npm.taobao.org/hooks-test-util/download/hooks-test-util-1.0.3.tgz#435a14eabde14a05b112f2b91c7477948f77b4df"
+  dependencies:
+    react-testing-library "^7.0.0"
 
 hosted-git-info@^2.1.4, hosted-git-info@^2.6.0, hosted-git-info@^2.7.1:
   version "2.7.1"
@@ -9813,6 +9824,13 @@ react-testing-library@^5.9.0:
   dependencies:
     "@babel/runtime" "^7.3.1"
     dom-testing-library "^3.13.1"
+
+react-testing-library@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.npm.taobao.org/react-testing-library/download/react-testing-library-7.0.0.tgz#d3b535e44de94d7b0a83c56cd2e3cfed752dcec1"
+  dependencies:
+    "@babel/runtime" "^7.4.3"
+    dom-testing-library "^4.0.0"
 
 react-textarea-autosize@^7.0.4:
   version "7.1.0"

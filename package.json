@@ -36,7 +36,7 @@
     "@types/styled-jsx": "^2.2.8",
     "babel-loader": "^8.0.5",
     "css-loader": "^2.1.0",
-    "hooks-test-util": "^0.0.1",
+    "hooks-test-util": "1.0.3",
     "husky": "^2.2.0",
     "jest": "^24.1.0",
     "react": "^16.8.0",

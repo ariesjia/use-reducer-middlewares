@@ -10102,6 +10102,10 @@ redux-logger@^3.0.6:
   dependencies:
     deep-diff "^0.3.5"
 
+redux-thunk@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.npm.taobao.org/redux-thunk/download/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
+
 refractor@^2.4.1:
   version "2.8.0"
   resolved "http://registry.npm.taobao.org/refractor/download/refractor-2.8.0.tgz#29d7b2254e823edd2e3e476af286af1c11472bfa"

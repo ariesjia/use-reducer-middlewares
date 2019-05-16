@@ -43,6 +43,7 @@
     "react-dom": "^16.8.0",
     "react-testing-library": "^5.9.0",
     "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
     "rimraf": "^2.6.2",
     "scss-loader": "^0.0.1",
     "semantic-release": "^15.13.12",

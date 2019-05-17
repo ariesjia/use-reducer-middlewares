@@ -39,22 +39,21 @@ describe("middleware test",() => {
       thunkMiddleware, logMiddleware
     ]))
 
-    act(() => {
-      container.hook[1]((dispatch) => {
+    function dispatchAction(hook = container.hook) {
+      hook[1]((dispatch) => {
         dispatch({type: 'increment'})
         Promise.resolve().then(() => {
           dispatch({type: 'reset'})
         })
       })
+    }
+
+    act(() => {
+      dispatchAction()
     })
 
     act(() => {
-      container.hook[1]((dispatch) => {
-        dispatch({type: 'increment'})
-        Promise.resolve().then(() => {
-          dispatch({type: 'reset'})
-        })
-      })
+      dispatchAction()
     })
 
     await flushPromises()

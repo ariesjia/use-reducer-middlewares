@@ -29,11 +29,11 @@ const useReducerMiddlewares = function<R extends Reducer<any, any>, I>(
 ){
   return (middlewares: Middleware[] = []) => {
     const ref = useRef(initializer(initialState))
-    const [, setState] = useState(ref.current)
+    const rerender = useState()[1]
     let middlewareDispatch
     const dispatch = action => {
       ref.current = reducer(ref.current, action)
-      setState(ref.current)
+      rerender({})
       return action
     }
     const composedMiddleware = useMemo(() => {
